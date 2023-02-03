@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+History
+{% endblock %}
+
+
+{% block main %}
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-start">Symbol</th>
+            <th class="text-end">Shares</th>
+            <th class="text-end">Price</th>
+            <th class="text-end">Amount</th>
+            <th class="text-end">Total cost</th>
+            <th class="text-end">Transacted</th>
+            <th class="text-end">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in data %}
+        <tr>
+
+            <th class="text-start">{{item['share']}}</th>
+            <th class="text-end">{{item['amount']}}</th>
+            <th class="text-end">{{item['current_price']}}</th>
+            <th class="text-end">{{item['amount']}}</th>
+            <th class="text-end">{{item['cost']}}</th>
+            <th class="text-end">{{item['date']}}</th>
+            <th class="text-end">{{item['action']}}</th>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+{% endblock %}

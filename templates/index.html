@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Index
+{% endblock %}
+
+
+{% block main %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-start">Symbol</th>
+            <th class="text-start">Name</th>
+            <th class="text-end">Shares</th>
+            <th class="text-end">Price</th>
+            <th class="text-end">TOTAL</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% set count = namespace(value=0) %}
+        {%if length(data) > 0 %}
+        {% for item in data %}
+        {%set x = func(item["share"])['price'] %}
+        {%set y = float(item["sum(amount)"]) %}
+        {%set xy = x*y %}
+        <tr>
+            <td class="text-start">{{ item["share"] }}</td>
+            <td class="text-start">{{item["name"]}}</td>
+            <td class="text-end">{{ item["sum(amount)"] }}</td>
+            <td class="text-end">{{ x |usd }}</td>
+            <td class="text-end">{{ xy |usd }}</td>
+            {% set count.value = count.value + (x*y) %}
+
+        </tr>
+        {% endfor %}
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <td class="border-0 fw-bold text-end" colspan="4">Cash</td>
+            <td class="border-0 text-end">{{cash |usd}}</td>
+        </tr>
+        <tr>
+            <td class="border-0 fw-bold text-end" colspan="4">TOTAL</td>
+            {% set cashsm= cash+ count.value%}
+            <td class="border-0 fw-bold text-end" colspan="4">{{cashsm | usd}}</td>
+            {%endif %}
+
+            {% endblock %}
